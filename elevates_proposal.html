@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elevates Hack – Mega Hackathon Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="logo.jpeg" type="image/jpeg">
+<style>
+  :root {
+    --orange-hot: #FF4D00;
+    --orange-mid: #FF6B35;
+    --orange-soft: #FF8C5A;
+    --orange-glow: rgba(255,77,0,0.18);
+    --black: #0A0A0A;
+    --dark: #141414;
+    --card: #1C1C1C;
+    --border: rgba(255,77,0,0.2);
+    --text: #F0EDE8;
+    --muted: #888;
+    --white: #fff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 80px 24px 60px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(255,77,0,0.25) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 80% 80%, rgba(255,107,53,0.12) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,77,0,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,77,0,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+
+  .logo-wrap {
+    position: relative; z-index: 1;
+    margin-bottom: 36px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .logo-circle {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px;
+    box-shadow: 0 0 40px rgba(255,77,0,0.5), 0 0 80px rgba(255,77,0,0.2);
+    overflow: hidden;
+  }
+
+  .logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .logo-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 6px; text-transform: uppercase;
+    color: var(--orange-mid);
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,77,0,0.12);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 12px; font-weight: 500;
+    color: var(--orange-soft);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 28px;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--orange-hot);
+    box-shadow: 0 0 8px var(--orange-hot);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 10vw, 96px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s 0.2s ease both;
+    margin-bottom: 8px;
+    max-width: 800px;
+    margin: 0 auto 12px;
+  }
+
+  .hero h1 .grad {
+    background: linear-gradient(90deg, var(--orange-hot), var(--orange-soft), #FFB347);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 18px; color: var(--muted);
+    max-width: 520px; margin: 20px auto 0;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-stats {
+    display: flex; gap: 0;
+    margin-top: 52px; position: relative; z-index: 1;
+    animation: fadeUp 0.8s 0.4s ease both;
+    border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  @media (max-width: 768px) {
+    .hero-stats { flex-direction: column; border-radius: 20px; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 20px 24px; }
+    .stat:last-child { border-bottom: none; }
+  }
+
+  .stat {
+    padding: 24px 36px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 34px; font-weight: 800;
+    background: linear-gradient(135deg, #fff, var(--orange-soft));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+  }
+  .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+  .scroll-hint {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    z-index: 1; animation: bob 2s ease-in-out infinite;
+    color: var(--muted); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .scroll-hint::after {
+    content: '↓';
+    font-size: 18px;
+  }
+  @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MAIN CONTENT ── */
+  main { position: relative; z-index: 1; }
+
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  @media (max-width: 480px) {
+    .section { padding: 60px 20px; }
+  }
+
+  /* ── SECTION HEADER ── */
+  .sec-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: var(--orange-mid);
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .sec-label::before {
+    content: '';
+    display: block;
+    width: 32px; height: 2px;
+    background: var(--orange-hot);
+    border-radius: 2px;
+  }
+
+  .sec-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 48px;
+    color: var(--white);
+  }
+
+  /* ── OBJECTIVE CARDS ── */
+  .obj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .obj-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .obj-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--orange-hot), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .obj-card:hover { border-color: var(--orange-mid); transform: translateY(-4px); }
+  .obj-card:hover::before { opacity: 1; }
+
+  .obj-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+  .obj-card h3 { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .obj-card p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 32px;
+    border-top: 1px solid rgba(255,77,0,0.1);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    display: flex; flex-direction: column; gap: 0;
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--orange-hot), transparent);
+  }
+
+  .tl-item {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 20px 0;
+    position: relative;
+  }
+  .tl-dot {
+    position: absolute; left: -28px; top: 24px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--orange-hot);
+    box-shadow: 0 0 10px rgba(255,77,0,0.6);
+    flex-shrink: 0;
+  }
+  .tl-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: var(--orange-mid);
+    letter-spacing: 1px;
+    min-width: 24px;
+  }
+  .tl-text { font-size: 15px; color: var(--text); }
+
+  /* ── REQUIREMENTS GRID ── */
+  .req-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .req-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 32px 28px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .req-card:hover {
+    border-color: rgba(255,77,0,0.3);
+    box-shadow: 0 8px 32px rgba(255,77,0,0.08);
+  }
+
+  .req-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px;
+  }
+  .req-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255,77,0,0.2), rgba(255,140,90,0.1));
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .req-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--white);
+  }
+
+  .req-list { list-style: none; }
+  .req-list li {
+    font-size: 13.5px; color: #aaa;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: flex-start; gap: 10px;
+    line-height: 1.5;
+  }
+  .req-list li:last-child { border-bottom: none; }
+  .req-list li::before {
+    content: '→';
+    color: var(--orange-hot);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── PRIZE SECTION ── */
+  .prize-wrap {
+    background: linear-gradient(135deg, rgba(255,77,0,0.12), rgba(255,140,90,0.06));
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 56px 48px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .prize-wrap::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,77,0,0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+  .prize-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(56px, 10vw, 100px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -4px;
+    background: linear-gradient(135deg, #fff 30%, var(--orange-soft));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative; z-index: 1;
+    margin-bottom: 8px;
+  }
+  .prize-label {
+    font-size: 13px; color: var(--muted);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 40px;
+    position: relative; z-index: 1;
+  }
+
+  .prize-tiers {
+    display: flex; gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+
+  .prize-tier {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 32px;
+    min-width: 140px;
+    transition: transform 0.3s;
+  }
+  .prize-tier:hover { transform: translateY(-6px); }
+  .prize-tier:nth-child(1) { border-color: rgba(255,215,0,0.3); }
+  .prize-tier:nth-child(2) { border-color: rgba(192,192,192,0.3); }
+  .prize-tier:nth-child(3) { border-color: rgba(205,127,50,0.3); }
+
+  .tier-medal { font-size: 32px; margin-bottom: 8px; }
+  .tier-rank {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── CULTURAL ── */
+  .cultural-card {
+    background: linear-gradient(135deg, #1a1a1a, #111);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 24px;
+    padding: 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    align-items: center;
+  }
+
+  .cultural-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 30px; font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .cultural-card p { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+
+  .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    background: rgba(255,77,0,0.1);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px; color: var(--orange-soft);
+    font-weight: 500;
+  }
+
+  .condition-box {
+    background: rgba(255,77,0,0.06);
+    border: 1px solid rgba(255,77,0,0.15);
+    border-left: 3px solid var(--orange-hot);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    font-size: 13px; color: #ccc;
+    line-height: 1.6;
+  }
+
+  /* ── IMPACT ── */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .impact-item {
+    background: var(--card);
+    padding: 32px 28px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .impact-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    background: linear-gradient(135deg, var(--white), var(--orange-soft));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block; margin-bottom: 6px;
+  }
+  .impact-desc { font-size: 13px; color: var(--muted); }
+
+  /* ── CLOSING ── */
+  .closing {
+    text-align: center;
+    padding: 80px 32px 120px;
+    max-width: 800px; margin: 0 auto;
+  }
+
+  .quote-mark {
+    font-family: 'Syne', sans-serif;
+    font-size: 120px; line-height: 0.6;
+    color: rgba(255,77,0,0.15);
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .quote-text {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.5px;
+    color: var(--white);
+    margin-bottom: 36px;
+  }
+
+  .cta-row {
+    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--orange-hot), var(--orange-soft));
+    color: white; border: none;
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(255,77,0,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,77,0,0.5); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--orange-mid); color: var(--orange-mid); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+    flex-wrap: wrap; gap: 16px;
+  }
+  footer .f-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 18px;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  footer .f-logo img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  footer p { font-size: 12px; color: var(--muted); }
+
+  /* ── PARTNER BADGE ── */
+  .partner-strip {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex; align-items: center; justify-content: center; gap: 24px;
+    font-size: 12px; color: var(--muted); letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .partner-strip strong { color: var(--white); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; }
+
+  @media (max-width: 800px) {
+    .cultural-card { grid-template-columns: 1fr; gap: 32px; padding: 32px; }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 100px 20px 60px; }
+    .hero h1 { font-size: 40px; }
+    .hero-sub { font-size: 16px; }
+    .sec-title { font-size: 32px; }
+    .impact-grid { grid-template-columns: 1fr; }
+    .impact-item { border-right: none; }
+    .prize-wrap { padding: 40px 24px; }
+    footer { flex-direction: column; text-align: center; padding: 40px 24px; }
+  }
+
+  @media (max-width: 400px) {
+    .hero h1 { font-size: 34px; letter-spacing: -1.5px; }
+    .prize-amount { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="logo-wrap">
+    <div class="logo-circle"><img src="logo.jpeg" alt="Elevates Logo"></div>
+    <div class="logo-name">Elevates</div>
+  </div>
+
+  <div class="badge">Mega Hackathon Proposal · 2026</div>
+
+  <h1>
+    <span class="grad">Elevates</span><br>Hack
+  </h1>
+
+  <p class="hero-sub">A 24-hour multi-district innovation marathon pushing the boundaries of student-led technology.</p>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">500+</span>
+      <span class="stat-label">Participants</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">24h</span>
+      <span class="stat-label">Non-stop</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Districts</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">₹1L</span>
+      <span class="stat-label">Prize Pool</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- PARTNER STRIP -->
+<div class="partner-strip">
+  <span>Organized by</span>
+  <strong>Elevates</strong>
+  <span>·</span>
+  <span>In association with</span>
+  <strong>Brototype</strong>
+  <span>·</span>
+  <a href="https://elevates.live" style="color:var(--orange-mid);text-decoration:none;font-weight:600;">elevates.live</a>
+</div>
+
+<!-- OBJECTIVES -->
+<main>
+<section class="section">
+  <div class="sec-label">Why we're doing this</div>
+  <h2 class="sec-title">Our Objectives</h2>
+  <div class="obj-grid">
+    <div class="obj-card">
+      <span class="obj-icon">🌍</span>
+      <h3>Real-World Problem Solving</h3>
+      <p>Encourage students to tackle genuine challenges using technology.</p>
+    </div>
+    <div class="obj-card">
+      <span class="obj-icon">🚀</span>
+      <h3>Innovation Ecosystem</h3>
+      <p>Build a thriving, student-led culture of creation and collaboration.</p>
+    </div>
+    <div class="obj-card">
+      <span class="obj-icon">🔗</span>
+      <h3>Industry Bridge</h3>
+      <p>Connect students with industry mentors and real-world guidance.</p>
+    </div>
+    <div class="obj-card">
+      <span class="obj-icon">🏛️</span>
+      <h3>Beyond Academics</h3>
+      <p>Provide hands-on, practical learning that transcends the classroom.</p>
+    </div>
+    <div class="obj-card">
+      <span class="obj-icon">🤝</span>
+      <h3>Cross-District Unity</h3>
+      <p>Foster collaboration across institutions and districts in Kerala.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EVENT STRUCTURE -->
+<section class="section">
+  <div class="sec-label">How it runs</div>
+  <h2 class="sec-title">Event Structure</h2>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><span class="tl-num">01</span><span class="tl-text"><strong style="color:#fff">Opening Ceremony</strong> — Kick-off, welcome addresses & problem statement release</span></div>
+    <div class="tl-item"><div class="tl-dot"></div><span class="tl-num">02</span><span class="tl-text"><strong style="color:#fff">Development Phase</strong> — Continuous 24-hour build sprint with full mentor access</span></div>
+    <div class="tl-item"><div class="tl-dot"></div><span class="tl-num">03</span><span class="tl-text"><strong style="color:#fff">Mentor Sessions</strong> — Scheduled technical guidance from Brototype experts</span></div>
+    <div class="tl-item"><div class="tl-dot"></div><span class="tl-num">04</span><span class="tl-text"><strong style="color:#fff">Final Submission</strong> — Code freeze and project packaging</span></div>
+    <div class="tl-item"><div class="tl-dot"></div><span class="tl-num">05</span><span class="tl-text"><strong style="color:#fff">Demo & Evaluation</strong> — Pitching to judge panel; live demonstrations</span></div>
+    <div class="tl-item"><div class="tl-dot"></div><span class="tl-num">06</span><span class="tl-text"><strong style="color:#fff">Prize Distribution</strong> — Awards, recognition & closing celebration</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REQUIREMENTS -->
+<section class="section">
+  <div class="sec-label">What we need</div>
+  <h2 class="sec-title">Requirements from College</h2>
+  <div class="req-grid">
+
+    <div class="req-card">
+      <div class="req-header">
+        <div class="req-icon">📶</div>
+        <h3>Internet & Network</h3>
+      </div>
+      <ul class="req-list">
+        <li>Dedicated leased line — minimum 500 Mbps (recommended 1 Gbps)</li>
+        <li>Support for 1,200–1,500 concurrent devices</li>
+        <li>Full campus WiFi with multiple access points</li>
+        <li>Backup internet (secondary ISP / 5G failover)</li>
+        <li>Enterprise-grade routers & switches</li>
+        <li>UPS backup for all networking systems</li>
+      </ul>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header">
+        <div class="req-icon">🔌</div>
+        <h3>Power & Electrical</h3>
+      </div>
+      <ul class="req-list">
+        <li>24-hour uninterrupted power supply</li>
+        <li>Generator / inverter backup</li>
+        <li>Minimum 1 socket per participant</li>
+        <li>Heavy-duty extension boards</li>
+        <li>Dedicated circuits for participant, stage & networking areas</li>
+      </ul>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header">
+        <div class="req-icon">🏫</div>
+        <h3>Venue & Space</h3>
+      </div>
+      <ul class="req-list">
+        <li>Capacity for 500+ participants</li>
+        <li>Large hall(s) or multiple classrooms</li>
+        <li>Dedicated coding, mentor, rest & dining zones</li>
+        <li>Stage with projector / LED display</li>
+        <li>Registration & coordination desk</li>
+      </ul>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header">
+        <div class="req-icon">🛏️</div>
+        <h3>Overnight Stay</h3>
+      </div>
+      <ul class="req-list">
+        <li>Official overnight institutional permission</li>
+        <li>Separate rest areas for boys and girls</li>
+        <li>Mats / chairs for rest</li>
+        <li>24-hour washroom access</li>
+        <li>Continuous security monitoring</li>
+      </ul>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header">
+        <div class="req-icon">🍽️</div>
+        <h3>Food & Refreshments</h3>
+      </div>
+      <ul class="req-list">
+        <li>Dinner & midnight snacks</li>
+        <li>Breakfast for all participants</li>
+        <li>Tea / coffee stations throughout</li>
+        <li>Continuous drinking water availability</li>
+        <li>Organized distribution system</li>
+      </ul>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header">
+        <div class="req-icon">🔐</div>
+        <h3>Security & Permissions</h3>
+      </div>
+      <ul class="req-list">
+        <li>Institutional approval for event</li>
+        <li>24-hour campus security staff</li>
+        <li>ID-based entry system</li>
+        <li>Controlled access points</li>
+        <li>Emergency response readiness</li>
+      </ul>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header">
+        <div class="req-icon">🎤</div>
+        <h3>Event Infrastructure</h3>
+      </div>
+      <ul class="req-list">
+        <li>Stage with full sound system</li>
+        <li>Projector / LED display screen</li>
+        <li>Campus-wide announcement system</li>
+        <li>Helpdesk & coordination desks</li>
+        <li>Event management support system</li>
+      </ul>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header">
+        <div class="req-icon">🧯</div>
+        <h3>Safety & Emergency</h3>
+      </div>
+      <ul class="req-list">
+        <li>First aid kits on-site</li>
+        <li>On-call medical support</li>
+        <li>Fire safety compliance</li>
+        <li>Clearly marked emergency exits</li>
+      </ul>
+    </div>
+
+    <div class="req-card">
+      <div class="req-header">
+        <div class="req-icon">🧑‍💻</div>
+        <h3>Operations & Volunteers</h3>
+      </div>
+      <ul class="req-list">
+        <li>20–30 volunteers required</li>
+        <li>Teams: Registration, Tech Support, Crowd, Food, Stage</li>
+        <li>Cleanliness & waste management</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRIZE -->
+<section class="section">
+  <div class="sec-label">Recognition</div>
+  <h2 class="sec-title">Prize Pool</h2>
+  <div class="prize-wrap">
+    <div class="prize-amount">₹1,00,000</div>
+    <div class="prize-label">Total Cash Prize</div>
+    <div class="prize-tiers">
+      <div class="prize-tier">
+        <div class="tier-medal">🥇</div>
+        <div class="tier-rank">1st Prize</div>
+      </div>
+      <div class="prize-tier">
+        <div class="tier-medal">🥈</div>
+        <div class="tier-rank">2nd Prize</div>
+      </div>
+      <div class="prize-tier">
+        <div class="tier-medal">🥉</div>
+        <div class="tier-rank">3rd Prize</div>
+      </div>
+      <div class="prize-tier" style="border-color: rgba(255,77,0,0.3)">
+        <div class="tier-medal">⭐</div>
+        <div class="tier-rank">Special Awards</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CULTURAL NIGHT -->
+<section class="section">
+  <div class="sec-label">Optional Add-on</div>
+  <h2 class="sec-title">Cultural Night</h2>
+  <div class="cultural-card">
+    <div>
+      <h3>A Festival Closing</h3>
+      <p>Transform the closing ceremony into an unforgettable celebration — elevating the event experience for every participant.</p>
+      <div class="tag-list" style="margin-bottom: 24px;">
+        <span class="tag">🎵 Music / DJ</span>
+        <span class="tag">💃 Dance Programs</span>
+        <span class="tag">🎤 Open Mic</span>
+        <span class="tag">🏆 Prize Ceremony</span>
+      </div>
+      <div class="condition-box">
+        <strong style="color:#fff">Condition:</strong> The cultural program will be conducted only if sufficient sponsorship or external funding is secured.
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:18px; margin-bottom: 20px; color: var(--muted); font-weight: 500;">Additional Requirements</h3>
+      <ul class="req-list">
+        <li>Stage lighting & enhanced sound system</li>
+        <li>Performer coordination</li>
+        <li>Enhanced crowd management</li>
+        <li>Extended event permission from institution</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- IMPACT -->
+<section class="section">
+  <div class="sec-label">The bigger picture</div>
+  <h2 class="sec-title">Expected Impact</h2>
+  <div class="impact-grid">
+    <div class="impact-item">
+      <span class="impact-num">500+</span>
+      <span class="impact-desc">Students across 5 districts</span>
+    </div>
+    <div class="impact-item">
+      <span class="impact-num">Regional</span>
+      <span class="impact-desc">Innovation hub status for the institution</span>
+    </div>
+    <div class="impact-item">
+      <span class="impact-num">Real</span>
+      <span class="impact-desc">World skills & hands-on development</span>
+    </div>
+    <div class="impact-item">
+      <span class="impact-num">Strong</span>
+      <span class="impact-desc">Industry-academic connections forged</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <span class="quote-mark">"</span>
+  <p class="quote-text">This initiative aims to transform the campus into a multi-district innovation hub, enabling students to build impactful solutions with industry-backed mentorship — fostering creativity, collaboration, and innovation.</p>
+  <div class="cta-row">
+    <a href="https://elevates.live" class="btn-primary">Visit elevates.live</a>
+    <a href="#" class="btn-outline">Download Proposal</a>
+  </div>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo"><img src="logo.jpeg" alt="Logo"> elevates.live</div>
+  <p>Organized by Elevates · In association with Brototype · Multi-District Innovation Hackathon</p>
+  <p style="color: var(--orange-mid);">elevates.live</p>
+</footer>
+
+</body>
+</html>
