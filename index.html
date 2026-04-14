@@ -206,6 +206,11 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
   /* ── MAIN CONTENT ── */
   main { position: relative; z-index: 1; }
 
@@ -589,12 +594,42 @@
     background: var(--card);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    padding: 20px 32px;
-    display: flex; align-items: center; justify-content: center; gap: 24px;
+    padding: 20px 0;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .partner-track {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    width: max-content;
+    padding: 0 40px;
+  }
+
+  .partner-track span, .partner-track strong {
     font-size: 12px; color: var(--muted); letter-spacing: 2px;
     text-transform: uppercase;
   }
-  .partner-strip strong { color: var(--white); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; }
+
+  .partner-track strong { color: var(--white); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; }
+  .partner-track a { color: var(--orange-mid); text-decoration: none; font-weight: 600; }
+
+  @media (min-width: 641px) {
+    .partner-track {
+      width: 100%;
+      justify-content: center;
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .partner-track {
+      animation: marquee 15s linear infinite;
+    }
+  }
 
   @media (max-width: 800px) {
     .cultural-card { grid-template-columns: 1fr; gap: 32px; padding: 32px; }
@@ -672,11 +707,25 @@
 
 <!-- PARTNER STRIP -->
 <div class="partner-strip">
-  <span>Organized by</span>
-  <strong>Elevates</strong>
-  <span>·</span>
-  <span>In association with</span>
-  <strong>Brototype</strong>
+  <div class="partner-track">
+    <span>Organized by</span>
+    <strong>Elevates</strong>
+    <span>·</span>
+    <span>In association with</span>
+    <strong>Brototype</strong>
+    <span>·</span>
+    <a href="https://elevates.live">elevates.live</a>
+    <span>·</span>
+    <!-- Duplicate for Marquee Loop -->
+    <span>Organized by</span>
+    <strong>Elevates</strong>
+    <span>·</span>
+    <span>In association with</span>
+    <strong>Brototype</strong>
+    <span>·</span>
+    <a href="https://elevates.live">elevates.live</a>
+    <span>·</span>
+  </div>
 </div>
 
 <!-- OBJECTIVES -->
