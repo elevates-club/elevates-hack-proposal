@@ -23,13 +23,20 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
   body {
     background: var(--black);
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     line-height: 1.7;
-    overflow-x: hidden;
+    position: relative;
   }
 
   /* ── NOISE OVERLAY ── */
@@ -241,7 +248,7 @@
   /* ── OBJECTIVE CARDS ── */
   .obj-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
   }
 
@@ -312,7 +319,7 @@
   /* ── REQUIREMENTS GRID ── */
   .req-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
   }
 
@@ -414,6 +421,7 @@
     border-radius: 16px;
     padding: 24px 32px;
     min-width: 140px;
+    flex: 1 1 140px;
     transition: transform 0.3s;
   }
   .prize-tier:hover { transform: translateY(-6px); }
@@ -471,7 +479,7 @@
   /* ── IMPACT ── */
   .impact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 2px;
     border-radius: 20px; overflow: hidden;
     border: 1px solid var(--border);
@@ -603,9 +611,20 @@
     footer { flex-direction: column; text-align: center; padding: 40px 24px; }
   }
 
-  @media (max-width: 400px) {
-    .hero h1 { font-size: 34px; letter-spacing: -1.5px; }
-    .prize-amount { font-size: 48px; }
+  @media (max-width: 480px) {
+    .section { padding: 40px 20px; }
+    .hero h1 { font-size: 34px; letter-spacing: -2px; }
+    .hero-sub { font-size: 15px; }
+    .prize-amount { font-size: 44px; }
+    .prize-tier { padding: 20px; min-width: 100%; }
+    .cultural-card { padding: 24px; }
+    .cultural-card h3 { font-size: 24px; }
+  }
+
+  @media (max-width: 360px) {
+    .hero h1 { font-size: 30px; }
+    .stat-num { font-size: 28px; }
+    .container, .section { padding-left: 16px; padding-right: 16px; }
   }
 </style>
 </head>
@@ -658,8 +677,6 @@
   <span>·</span>
   <span>In association with</span>
   <strong>Brototype</strong>
-  <span>·</span>
-  <a href="https://elevates.live" style="color:var(--orange-mid);text-decoration:none;font-weight:600;">elevates.live</a>
 </div>
 
 <!-- OBJECTIVES -->
@@ -949,7 +966,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="f-logo"><img src="logo.jpeg" alt="Logo"> elevates.live</div>
+  <div class="f-logo"><img src="logo.jpeg" alt="Logo"> elevates</div>
   <p>Organized by Elevates · In association with Brototype · Multi-District Innovation Hackathon</p>
   <p style="color: var(--orange-mid);">elevates.live</p>
 </footer>
